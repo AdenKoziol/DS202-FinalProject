@@ -1,0 +1,68 @@
+---
+title: "Analysis of Real Estate Market Trends  "
+author: "Aden Koziol"
+date: "3/31/2025"
+output: html_document
+---
+
+## Description of the Data Set  
+The dataset `realtor-data.csv` contains information about real estate listings, including variables such as price, number of bedrooms/bathrooms, square footage, location, and other relevant features.  
+
+## Data Cleaning Steps  
+
+```{r data-loading}
+library(tidyverse)
+library(knitr)
+
+realtor_data <- read_csv("realtor-data.csv")
+
+head(realtor_data)
+
+# Missing values
+missing_values <- colSums(is.na(realtor_data))
+kable(missing_values, caption = "Missing Values per Column")
+
+# Remove rows with missing critical data (e.g., price, bedrooms)
+cleaned_data <- realtor_data %>%
+  drop_na(price, bed, bath, house_size)
+
+# Remove duplicates
+cleaned_data <- distinct(cleaned_data)
+
+# Convert price to numeric (if stored as character)
+cleaned_data <- cleaned_data %>%
+  mutate(price = as.numeric(gsub("[\\$,]", "", price)))
+
+# Filter out unrealistic prices (e.g., below $10,000 or above $10M)
+cleaned_data <- cleaned_data %>%
+  filter(price >= 10000 & price <= 10000000)
+```
+
+## Marginal Summaries
+```{r}
+# Summary statistics for numeric variables
+summary_stats <- cleaned_data %>%
+  select(price, bed, bath, house_size) %>%
+  summary()
+
+kable(summary_stats, caption = "Summary Statistics")
+
+# Distribution of categorical variables (e.g., state, city)
+if ("state" %in% colnames(cleaned_data)) {
+  state_counts <- cleaned_data %>%
+    count(state) %>%
+    arrange(desc(n))
+  
+  kable(state_counts, caption = "Property Count by State")
+}
+```
+
+## Questions To Be Addressed
+
+- How does property price vary by things like state and city?
+
+- What is the relationship between square feet and price?
+
+- How does number of bedrooms/bathrooms affect price?
+
+- Can we predict property prices based on things like square feet, bedrooms, and/or location?
