@@ -102,7 +102,7 @@ cleaned_data %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](ReadME_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
 - Hawaii, California, New York, and Massachusetts have the highest
   average price per square foot.
