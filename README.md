@@ -158,7 +158,7 @@ ggplot(avg_price_sqft, aes(x = location_type, y = avg_price_per_sqft, fill = loc
   theme(legend.position = "none")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](ReadME_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 - Used cities Des Moines, Cedar Rapids, North Liberty, Coralville, Elma,
   and Sac City.
@@ -196,7 +196,7 @@ ggplot(bedroom_price, aes(x = bed, y = median_price)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](ReadME_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
 - This graph is not linear.
 
@@ -228,7 +228,7 @@ ggplot(bathroom_price, aes(x = bath_rounded, y = median_price)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](ReadME_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 
 - The trend of this graph is pretty linear.
 
