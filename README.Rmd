@@ -5,7 +5,12 @@ output: github_document
 ---
 
 ## Data
-The dataset `realtor-data.csv` contains information about real estate listings, including variables such as price, number of bedrooms/bathrooms, square footage, location, and other relevant features.  
+- Kaggle dataset with real estate listings across the U.S.
+
+- Over 2 Million Entries
+
+- Columns: Status, Price, Bed, Bath, Acre, City, State, Zip Code, Square Feet
+
 
 ## Data Cleaning
 
@@ -34,25 +39,6 @@ cleaned_data <- cleaned_data %>%
   filter(price >= 10000 & price <= 10000000)
 ```
 
-## Marginal Summaries
-```{r}
-# Summary statistics for numeric variables
-summary_stats <- cleaned_data %>%
-  select(price, bed, bath, house_size) %>%
-  summary()
-
-kable(summary_stats, caption = "Summary Statistics")
-
-# Distribution of categorical variables (e.g., state, city)
-if ("state" %in% colnames(cleaned_data)) {
-  state_counts <- cleaned_data %>%
-    count(state) %>%
-    arrange(desc(n))
-  
-  kable(state_counts, caption = "Property Count by State")
-}
-```
-
 ## Questions To Be Addressed
 
 ### How does property price per square foot vary between states?
@@ -79,10 +65,12 @@ cleaned_data %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-If we exclude territories, we can see that Hawaii, California, New York, and Massachusetts have a higher average price per square foot than the rest of the states while Ohio, West Virginia, Kansas, and Mississippi have a lower average price per square foot.
+- Hawaii, California, New York, and Massachusetts have the highest average price per square foot. 
 
+- Ohio, West Virginia, Kansas, and Mississippi have the lowest average price per square foot.
 
-EXPLAIN/RESEARCH WHY THIS MAY BE
+- Price per square foot is likely affected by desirability, large cities, and job markets.
+
 
 ### How does price per square foot vary between urban, suburban, and rural properties?
 
@@ -129,11 +117,17 @@ ggplot(avg_price_sqft, aes(x = location_type, y = avg_price_per_sqft, fill = loc
   theme(legend.position = "none")
 ```
 
+- Used cities Des Moines, Cedar Rapids, North Liberty, Coralville, Elma, and Sac City.
 
-We can see that rural cities have a much lower average price per square foot than both urban and suburban cities. Suburban cities do have a slightly higher average price per square foot than urban cities.
+- Rural properties have a much lower price per square foot.
+
+- Suburban properties have a slightly higher price per square foot than urban properties.
+
+- Rural areas are less expensive likely because of a lesser population density and fewer jobs.
+
+- Suburban areas are likely more expensive than urban areas because of higher acres and better schools.
 
 
-EXPLAIN/RESEARCH WHY THIS MAY BE
 
 ### How does the number of bedrooms affect price?
 
@@ -157,6 +151,13 @@ ggplot(bedroom_price, aes(x = bed, y = median_price)) +
   theme_minimal()
 ```
 
+- This graph is not linear.
+
+- Average bedroom add on is $50,000. - Fixr
+
+- Adding a 4th or 5th bedroom to a home is worth it.
+
+
 ### How does the number of bathrooms affect price?
 ```{r}
 # median price of bathrooms 1-4
@@ -179,3 +180,23 @@ ggplot(bathroom_price, aes(x = bath_rounded, y = median_price)) +
   ) +
   theme_minimal()
 ```
+
+- The trend of this graph is pretty linear.
+
+- Bathroom add on is on average $35,000. - Angi’s List
+
+- Adding another bathroom to a home seems to increase the price by about $50,000.
+
+## Conclusions
+- More desirable locations, larger cities, and better job markets increase the price per square foot of a property.
+
+- Rural areas have a cheaper price per square foot than urban and suburban areas.
+
+- Adding a 4th or 5th bedroom to a home is a good investment.
+
+- Adding a bathroom to a home is a good investment.
+
+## Sources
+Bedroom addition cost: Cost to add a bedroom. Fixr. (n.d.). https://www.fixr.com/costs/bedroom-addition
+
+Hisaka, M. (2024, December 15). How much does it cost to add a bathroom in 2025?. Angi. https://www.angi.com/articles/how-much-does-it-cost-add-bathroom.htm

@@ -4,10 +4,12 @@ Aden Koziol
 
 ## Data
 
-The dataset `realtor-data.csv` contains information about real estate
-listings, including variables such as price, number of
-bedrooms/bathrooms, square footage, location, and other relevant
-features.
+- Kaggle dataset with real estate listings across the U.S.
+
+- Over 2 Million Entries
+
+- Columns: Status, Price, Bed, Bath, Acre, City, State, Zip Code, Square
+  Feet
 
 ## Data Cleaning
 
@@ -74,98 +76,6 @@ cleaned_data <- cleaned_data %>%
   filter(price >= 10000 & price <= 10000000)
 ```
 
-## Marginal Summaries
-
-``` r
-# Summary statistics for numeric variables
-summary_stats <- cleaned_data %>%
-  select(price, bed, bath, house_size) %>%
-  summary()
-
-kable(summary_stats, caption = "Summary Statistics")
-```
-
-|     | price           | bed            | bath           | house_size    |
-|:----|:----------------|:---------------|:---------------|:--------------|
-|     | Min. : 10000    | Min. : 1.000   | Min. : 1.000   | Min. : 4      |
-|     | 1st Qu.: 235000 | 1st Qu.: 3.000 | 1st Qu.: 2.000 | 1st Qu.: 1296 |
-|     | Median : 375000 | Median : 3.000 | Median : 2.000 | Median : 1747 |
-|     | Mean : 544121   | Mean : 3.255   | Mean : 2.491   | Mean : 2026   |
-|     | 3rd Qu.: 599000 | 3rd Qu.: 4.000 | 3rd Qu.: 3.000 | 3rd Qu.: 2397 |
-|     | Max. :10000000  | Max. :444.000  | Max. :460.000  | Max. :1560780 |
-
-Summary Statistics
-
-``` r
-# Distribution of categorical variables (e.g., state, city)
-if ("state" %in% colnames(cleaned_data)) {
-  state_counts <- cleaned_data %>%
-    count(state) %>%
-    arrange(desc(n))
-  
-  kable(state_counts, caption = "Property Count by State")
-}
-```
-
-| state                |      n |
-|:---------------------|-------:|
-| California           | 190876 |
-| Florida              | 182749 |
-| Texas                | 158238 |
-| New York             |  67462 |
-| Illinois             |  64145 |
-| Pennsylvania         |  57841 |
-| Arizona              |  56162 |
-| Georgia              |  54727 |
-| Virginia             |  54368 |
-| Washington           |  52330 |
-| Ohio                 |  45942 |
-| North Carolina       |  42937 |
-| Maryland             |  39773 |
-| Massachusetts        |  35462 |
-| Minnesota            |  35146 |
-| Missouri             |  32962 |
-| Oklahoma             |  28830 |
-| Oregon               |  26355 |
-| Michigan             |  25677 |
-| New Jersey           |  24069 |
-| Colorado             |  24062 |
-| South Carolina       |  22326 |
-| Wisconsin            |  20736 |
-| Alabama              |  20526 |
-| Tennessee            |  20163 |
-| Iowa                 |  18272 |
-| Kentucky             |  17138 |
-| Louisiana            |  16808 |
-| Indiana              |  12753 |
-| New Mexico           |  12554 |
-| Arkansas             |  12368 |
-| Idaho                |  12284 |
-| Connecticut          |  11900 |
-| Kansas               |  11687 |
-| Nevada               |  11109 |
-| Utah                 |  10845 |
-| Mississippi          |   8884 |
-| West Virginia        |   7915 |
-| Rhode Island         |   7696 |
-| Delaware             |   7179 |
-| Montana              |   6035 |
-| District of Columbia |   6022 |
-| Hawaii               |   4955 |
-| Nebraska             |   4649 |
-| North Dakota         |   2547 |
-| Maine                |   2439 |
-| Puerto Rico          |   2429 |
-| New Hampshire        |   2297 |
-| South Dakota         |   2293 |
-| Wyoming              |   1851 |
-| Vermont              |   1573 |
-| Alaska               |    900 |
-| Guam                 |    264 |
-| Virgin Islands       |    204 |
-
-Property Count by State
-
 ## Questions To Be Addressed
 
 ### How does property price per square foot vary between states?
@@ -192,14 +102,16 @@ cleaned_data %>%
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
 
-If we exclude territories, we can see that Hawaii, California, New York,
-and Massachusetts have a higher average price per square foot than the
-rest of the states while Ohio, West Virginia, Kansas, and Mississippi
-have a lower average price per square foot.
+- Hawaii, California, New York, and Massachusetts have the highest
+  average price per square foot.
 
-EXPLAIN/RESEARCH WHY THIS MAY BE
+- Ohio, West Virginia, Kansas, and Mississippi have the lowest average
+  price per square foot.
+
+- Price per square foot is likely affected by desirability, large
+  cities, and job markets.
 
 ### How does price per square foot vary between urban, suburban, and rural properties?
 
@@ -246,13 +158,21 @@ ggplot(avg_price_sqft, aes(x = location_type, y = avg_price_per_sqft, fill = loc
   theme(legend.position = "none")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
-We can see that rural cities have a much lower average price per square
-foot than both urban and suburban cities. Suburban cities do have a
-slightly higher average price per square foot than urban cities.
+- Used cities Des Moines, Cedar Rapids, North Liberty, Coralville, Elma,
+  and Sac City.
 
-EXPLAIN/RESEARCH WHY THIS MAY BE
+- Rural properties have a much lower price per square foot.
+
+- Suburban properties have a slightly higher price per square foot than
+  urban properties.
+
+- Rural areas are less expensive likely because of a lesser population
+  density and fewer jobs.
+
+- Suburban areas are likely more expensive than urban areas because of
+  higher acres and better schools.
 
 ### How does the number of bedrooms affect price?
 
@@ -276,7 +196,13 @@ ggplot(bedroom_price, aes(x = bed, y = median_price)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+
+- This graph is not linear.
+
+- Average bedroom add on is \$50,000. - Fixr
+
+- Adding a 4th or 5th bedroom to a home is worth it.
 
 ### How does the number of bathrooms affect price?
 
@@ -302,4 +228,32 @@ ggplot(bathroom_price, aes(x = bath_rounded, y = median_price)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+- The trend of this graph is pretty linear.
+
+- Bathroom add on is on average \$35,000. - Angi’s List
+
+- Adding another bathroom to a home seems to increase the price by about
+  \$50,000.
+
+## Conclusions
+
+- More desirable locations, larger cities, and better job markets
+  increase the price per square foot of a property.
+
+- Rural areas have a cheaper price per square foot than urban and
+  suburban areas.
+
+- Adding a 4th or 5th bedroom to a home is a good investment.
+
+- Adding a bathroom to a home is a good investment.
+
+## Sources
+
+Bedroom addition cost: Cost to add a bedroom. Fixr. (n.d.).
+<https://www.fixr.com/costs/bedroom-addition>
+
+Hisaka, M. (2024, December 15). How much does it cost to add a bathroom
+in 2025?. Angi.
+<https://www.angi.com/articles/how-much-does-it-cost-add-bathroom.htm>
